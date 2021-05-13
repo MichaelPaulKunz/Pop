@@ -147,13 +147,16 @@ const App = () => {
                   email: email,
                   picture: picture,
                   id: addUser.data.id,
+                  spanish: addUser.data.spanish,
+                  dark: addUser.data.dark
                 });
             })
         } else {
           setIsLogged(false);
           setUser({});
         }
-      });
+      })
+      .catch(err => console.log(err));
   }
 
   useEffect(() => logged(), []);
@@ -343,6 +346,8 @@ const Home = ({
                           selectMerchant={setSelectedMerchant}
                           userSubs={userSubs}
                           setUserSubs={setUserSubs}
+                          user={user}
+                          setUser={setUser}
                         />
                       }}
                     />

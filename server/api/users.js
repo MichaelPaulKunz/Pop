@@ -66,7 +66,7 @@ users.post('/adduser/:name/:email/', (req, res) => {
   ]})
   .then(results => {
     if (!results.length) {
-      Users.create({ name, email })
+      Users.create({ name, email, spanish: false, dark: false })
         .then(data => res.send(data))
     }
     else {
@@ -85,5 +85,48 @@ users.delete('/deleteuser/:id', (req, res) => {
     .then(res.send(`user ${id} deleted`));
 });
 
+//switch to dark mode
+users.put('/dark', (req, res) => {
+  const { id } = req.body;
+  Users.update(
+    {dark: true},
+    {where: {id: id}}
+  )
+  .then(result => res.send(result))
+  .catch(err => res.send(err));
+});
+
+//switch to light mode
+users.put('/light', (req, res) => {
+  const { id } = req.body;
+  Users.update(
+    {dark: false},
+    {where: {id: id}}
+  )
+  .then(result => res.send(result))
+  .catch(err => res.send(err));
+});
+
+//switch to spanish
+users.put('/spanish', (req, res) => {
+  const { id } = req.body;
+  Users.update(
+    {spanish: true},
+    {where: {id: id}}
+  )
+  .then(result => res.send(result))
+  .catch(err => res.send(err));
+});
+
+//switch to english
+users.put('/english', (req, res) => {
+  const { id } = req.body;
+  Users.update(
+    {spanish: false},
+    {where: {id: id}}
+  )
+  .then(result => res.send(result))
+  .catch(err => res.send(err));
+});
 
 module.exports = users;

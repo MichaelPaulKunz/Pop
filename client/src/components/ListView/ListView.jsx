@@ -63,7 +63,7 @@ const Search = styled.button`
 const Wrap = styled.div`
 margin-left: 100px;
 `
-const ListView= ({ merchData, selectMerchant, userSubs, setUserSubs }) => {
+const ListView= ({ merchData, selectMerchant, userSubs, setUserSubs, user, setUser }) => {
   const [ openPopsView, setOpenPopsView ] = useState(true);
   const [ yourSubsView, setYourSubsView ] = useState(false);
   const [ searchPopsView, setSearchPopsView ] = useState(false);
@@ -74,6 +74,9 @@ const ListView= ({ merchData, selectMerchant, userSubs, setUserSubs }) => {
   const [ search, setSearch ] = useState('')
   const { t, i18n } = useTranslation();
   const { name } = merchData[0];
+
+  console.log("user: ");
+  console.log(user);
 const updateSearch = (e) => {
   setSearch(e.target.value.substr(0, 40))
 }
