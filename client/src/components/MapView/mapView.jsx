@@ -9,6 +9,7 @@ import {
 import Window from '../MapView/Window.jsx'
 import styled, { css } from 'styled-components'
 import { useTranslation } from 'react-i18next'
+import axios from 'axios';
 //import SearchBar from './../searchbar/SearchBar.jsx'
 //import map from '../popup/foodmarker.png'
 const libraries = ["places"];
@@ -63,7 +64,7 @@ const options = {
   disableDefaultUI: true,
   gestureHandling: 'greedy'
 }
-const Map = ({ merchData, merchant, selectMerchant, currentLocMarker, setCurrentLocMarker, setMLPrimary , center, setCenter, isLocater, zoomLevel}) => {
+const Map = ({ merchData, merchant, selectMerchant, currentLocMarker, setCurrentLocMarker, setMLPrimary , center, setCenter, isLocater, zoomLevel, user, setUser, spanish, setSpanish}) => {
   const [ selectedPopUp, setSelectedPopUp ] = useState(null);
   const [ yourLocBool, setYourLocBool] = useState(false);
   const [englishPrimary, setEnglishPrimary] = useState(false)
@@ -77,6 +78,21 @@ const Map = ({ merchData, merchant, selectMerchant, currentLocMarker, setCurrent
     googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
     libraries
   })
+
+  const setLanguage = () => {
+    console.log('blah:');
+    console.log(user);
+    if (user.spanish) {
+      setSpanishPrimary(true);
+      setEnglishPrimary(false);
+      getLang('sp');
+    } else {
+      setSpanishPrimary(false);
+      setEnglishPrimary(true);
+      getLang('en');
+    }
+  }
+  useEffect(async () =>  user ? setLanguage() : null, [user]);
   const mapMarkerClick = React.useCallback(()=>{
     setSelectedPopUp(merch)
   } , []);
@@ -102,17 +118,17 @@ const Map = ({ merchData, merchant, selectMerchant, currentLocMarker, setCurrent
     console.log('location test failed');
   }
 
-    useEffect(() => {
-        navigator.geolocation.getCurrentPosition(geoLocTest, failed);
-    },[])
-    if (loadError) {
-      return "error loading map"
-    }
-    if (!isLoaded) {
-      return "loading maps"
-    }
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(geoLocTest, failed);
+  },[])
+  if (loadError) {
+    return "error loading map"
+  }
+  if (!isLoaded) {
+    return "loading maps"
+  }
 
-// console.log(t("touch"))
+  // console.log(t("touch"))
   return (
     <div>
       <Nav>
@@ -122,15 +138,24 @@ const Map = ({ merchData, merchant, selectMerchant, currentLocMarker, setCurrent
         getLang('en')
         setEnglishPrimary(!englishPrimary)
         setSpanishPrimary(false)
+        axios.put('/api/users/english', {
+          id: user.id
+        })
+        .then(err => console.log(err));
       }}>
         {t('englishBtn')}
         </EnglishBtn>
       <SpanishBtn
       spanishPrimary={spanishPrimary}
       onClick={()=>{
+        console.log(user);
         setSpanishPrimary(!spanishPrimary)
         setEnglishPrimary(false)
         getLang('sp')
+        axios.put('/api/users/spanish', {
+          id: user.id
+        })
+        .then(err => console.log(err));
         }}>
           {t('spanishBtn')}
           </SpanishBtn>

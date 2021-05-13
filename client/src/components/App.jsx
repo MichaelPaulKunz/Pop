@@ -114,6 +114,7 @@ const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(darkModeStore === 'true' ? true : false);
   const [darkDiv, setDarkDiv] = useState(false);
   const [ center, setCenter ] = useState({lat: 29.956124, lng: -90.090509});
+  const [ spanish, setSpanish ] = useState(false);
 
   // Storage for dark mode setting.
   const darkModeStore = localStorage.getItem('isDarkMode');
@@ -151,6 +152,7 @@ const App = () => {
                   dark: addUser.data.dark
                 });
                 setIsDarkMode(addUser.data.dark);
+                setSpanish(addUser.data.spanish);
             })
         } else {
           setIsLogged(false);
@@ -202,6 +204,8 @@ const App = () => {
                     setIsDarkMode={setIsDarkMode}
                     center={center}
                     setCenter={setCenter}
+                    spanish={spanish}
+                    setSpanish={setSpanish}
                   />
               )
             }}
@@ -230,7 +234,7 @@ const Home = ({
   lVPrimary, setLVPrimary,
   mLPrimary, setMLPrimary,
   darkDiv, setDarkDiv,
-  isDarkMode, setIsDarkMode, center, setCenter
+  isDarkMode, setIsDarkMode, center, setCenter, spanish, setSpanish
 }) => {
   const { t, i18n } = useTranslation();
 
@@ -323,6 +327,10 @@ const Home = ({
                             setCenter={setCenter}
                             isLocater={false}
                             zoomLevel={12}
+                            user={user}
+                            setUser={setUser}
+                            spanish={spanish}
+                            setSpanish={setSpanish}
                           />
                         )
                       }}
@@ -346,6 +354,10 @@ const Home = ({
                             setMLPrimary={setMLPrimary}
                             isLocater={true}
                             zoomLevel={18}
+                            user={user}
+                            setUser={setUser}
+                            spanish={spanish}
+                            setSpanish={setSpanish}
                           />
                         )
                       }}
