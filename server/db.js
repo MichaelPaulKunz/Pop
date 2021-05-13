@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require('sequelize');
-
+//refact
 
 const sequelize = new Sequelize({
   host: 'localhost',
