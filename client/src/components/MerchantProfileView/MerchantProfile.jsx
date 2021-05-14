@@ -115,6 +115,8 @@ const MerchantProfile = ({ merchant, user, userSubs, setUserSubs, merchData, set
   const {t} = useTranslation()
   const [ reviewBtnPrimary, setReviewBtnPrimary ] = useState(false)
   //const [reviews, setReviews] = useState(merchant.Reviews);
+  console.log('merchant: ');
+  console.log(merchant);
   const findReviews = () => {
     if (merchant.Reviews) {
       setReviews(merchant.Reviews);
@@ -186,12 +188,9 @@ const MerchantProfile = ({ merchant, user, userSubs, setUserSubs, merchData, set
             width="300"
             crop="scale"
           /> */}
-        <H2>Info</H2>
-        <p>
-          {merchant.info}
-        </p>
-      </div>
-      <Link to="/locate">
+          { merchant.isOpen
+        ?
+      (<Link to="/locate">
         <LocateBtn
           locatePrimary={locatePrimary}
           onClick={() => {
@@ -201,7 +200,13 @@ const MerchantProfile = ({ merchant, user, userSubs, setUserSubs, merchData, set
           setReviewView(false)
           }}>{t("locateBtn")}
         </LocateBtn>
-      </Link>
+      </Link>)
+      : null }
+        <H2>Info</H2>
+        <p>
+          {merchant.info}
+        </p>
+      </div>
         <ViewMenuBtn
           viewMenuPrimary={viewMenuPrimary}
           onClick={() => {
