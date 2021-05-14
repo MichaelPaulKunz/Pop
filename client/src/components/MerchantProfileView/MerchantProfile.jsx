@@ -190,7 +190,8 @@ const MerchantProfile = ({ merchant, user, userSubs, setUserSubs, merchData, set
           /> */}
           { merchant.isOpen
         ?
-      (<Link to="/locate">
+      (<div> <h5>{merchant.address}</h5>
+      <Link to="/locate">
         <LocateBtn
           locatePrimary={locatePrimary}
           onClick={() => {
@@ -200,7 +201,7 @@ const MerchantProfile = ({ merchant, user, userSubs, setUserSubs, merchData, set
           setReviewView(false)
           }}>{t("locateBtn")}
         </LocateBtn>
-      </Link>)
+      </Link></div>)
       : null }
         <H2>Info</H2>
         <p>

@@ -30,11 +30,12 @@ const mapContainerStyle = {
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
+  gestureHandling: 'greedy'
 }
 
-const OpenPopupMap = ({ merchData, selectMerchant, 
-  currentLocMarker, setCurrentLocMarker, 
-  setMLPrimary, merchant, 
+const OpenPopupMap = ({ merchData, selectMerchant,
+  currentLocMarker, setCurrentLocMarker,
+  setMLPrimary, merchant,
   setMerchData, user,
   setSubs, setYourPopups
 }) => {
@@ -70,7 +71,7 @@ const OpenPopupMap = ({ merchData, selectMerchant,
       console.log(err)
     }
   }
-  
+
 
   const failed = () => {
     console.log('location test failed');
@@ -91,7 +92,7 @@ const OpenPopupMap = ({ merchData, selectMerchant,
 
   return (
     <div>
-      <ToggleOpenClose 
+      <ToggleOpenClose
         merchant={merchant}
         openOrClosed={openOrClosed}
         setOpenOrClosed={setOpenOrClosed}
@@ -130,7 +131,7 @@ const OpenPopupMap = ({ merchData, selectMerchant,
         alert('location moved!');
       }}
     >
-      <Marker 
+      <Marker
         position={{
           lat: +merchant.lat,
           lng: +merchant.lon

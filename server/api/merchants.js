@@ -1,7 +1,9 @@
 const { Merchants, Users, Products, Reviews, Subs, Admins } = require('../db.js');
 const { Router } = require('express');
 const merchants = Router();
-
+const axios = require('axios');
+require('dotenv').config();
+const ORS_KEY = process.env.ORS_KEY;
 //get all merchants
 merchants.get('/', (req, res) => {
   Merchants.findAll({
@@ -75,23 +77,36 @@ merchants.put('/openmerchant/:id/', (req, res) => {
   .catch(err => res.send(err));
 });
 //update merchant location
+//https://api.openrouteservice.org/geocode/reverse?api_key=5b3ce3597851110001cf62486d14495d6cf148e79f25f9021b06faa4&point.lon=-90.04322316456718&point.lat=29.976709490506295
 merchants.put('/merchcoords/:merchid', (req, res) => {
   const { merchid } = req.params;
-  const { lat, lng } = req.body;
-  Merchants.update(
-    {lat: lat,
-     lon: lng},
-     {where: {
-       id: merchid
-     }}
-     )
-    .then(() => res.sendStatus(201))
+  //const { lat, lng } = req.body;
+  axios.get(`https://api.openrouteservice.org/geocode/reverse?api_key=${ORS_KEY}&point.lon=${req.body.lng}&point.lat=${req.body.lat}`)
+  //axios.get('https://api.openrouteservice.org/geocode/reverse?api_key=5b3ce3597851110001cf62486d14495d6cf148e79f25f9021b06faa4&point.lon=-90.04322316456718&point.lat=29.976709490506295')
+    .then(data => {
+      //res.send(data.data.features[0].properties.name);
+      //res.send('hi mom');
+      Merchants.update(
+        {lat: req.body.lat,
+         lon: req.body.lng,
+         address: data.data.features[0].properties.housenumber + ' ' + data.data.features[0].properties.street},
+         {where: {
+           id: merchid
+         }}
+         )
+        .then(() => {
+          Merchants.findOne({
+            where: { id: req.params.merchid }
+          })
+        .then(result => res.send(result));
+        })
+    })
     .catch((err) => {
       res.sendStatus(500)
       console.log('merchant coordinate error', err)
     })
-})
-//update merchant info
+});
+// //update merchant info
 merchants.put('/updateinfo', (req, res) => {
   const {id, info} = req.body;
   Merchants.update(
@@ -103,7 +118,7 @@ merchants.put('/updateinfo', (req, res) => {
   .then(data => res.send(data))
   .catch(err => res.send(err));
 });
-//get admins by merchant id
+// //get admins by merchant id
 merchants.get('/admins/:id', (req, res) => {
   const { id } = req.params;
   Merchants.findOne({
