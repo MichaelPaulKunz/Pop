@@ -19,6 +19,8 @@ const H2 = styled.h2`
 const Div = styled.div`
 background-color: lightgrey;
 `
+
+
 const Window = ({ merchant, selectMerchant }) => {
   const { t } = useTranslation()
 

@@ -88,7 +88,7 @@ export default createGlobalStyle`
     :active {
         opacity: .5;
         color: black;
-        background-color: ${props => props.theme.mode === 'dark' ? '#D09C5A' : '#f5abc9'};
+        background-color: ${props => props.theme.mode === 'dark' ? '#7392C4' : '#f5abc9'};
         padding: 6.25px 16.25px
     }
 

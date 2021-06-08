@@ -31,12 +31,12 @@ const SpanishBtn = styled.button`
   border-radius: 6px;
   padding: 6px 16px;
   font-size: 14px;
-  ${props => props.spanishPrimary && css`
+  /* ${props => props.spanishPrimary && css`
   opacity: .5;
   color: black;
   background-color: #f5abc9;
   font-size: 14.25px;
-`}
+`} */
 `
 
 const Div = styled.div`
@@ -94,8 +94,8 @@ const Settings = ({ user, setUser, theme, setTheme }) => {
       englishPrimary={englishPrimary}
       onClick={()=>{
         getLang('en')
-        setEnglishPrimary(!englishPrimary)
-        setSpanishPrimary(false)
+        // setEnglishPrimary(!englishPrimary)
+        // setSpanishPrimary(false)
         console.log(user);
         axios.put('/api/users/english', {
           id: user.id
@@ -106,8 +106,8 @@ const Settings = ({ user, setUser, theme, setTheme }) => {
       <SpanishBtn
       spanishPrimary={spanishPrimary}
       onClick={()=>{
-        setSpanishPrimary(!spanishPrimary)
-        setEnglishPrimary(false)
+        // setSpanishPrimary(!spanishPrimary)
+        // setEnglishPrimary(false)
         getLang('sp')
         console.log(user);
         axios.put('/api/users/spanish', {

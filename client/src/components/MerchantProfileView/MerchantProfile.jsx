@@ -31,7 +31,8 @@ margin-top: 23px;
 `
 const H22 = styled.h1`
 
-margin-top: 15px;
+margin-top: 30px;
+/* text-shadow: 2px 2px 4px #000000; */
 margin-bottom: 0px;
 color: ${props => props.theme.mode === 'dark' ? '#D09C5A' : '#f5abc9'};
 font-size: 1.5rem;
@@ -255,6 +256,7 @@ const MerchantProfile = ({
           ''
         }
         <H22>{merchant.name} {openOrClosed}</H22>
+        
         <ProfilePic>
           <Imager src={profilePic}></Imager>
         </ProfilePic>
