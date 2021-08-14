@@ -4,7 +4,7 @@ import {
   GoogleMap,
   useLoadScript,
   Marker,
-  InfoWindow
+  InfoWindow,
 } from '@react-google-maps/api';
 //import Window from '../MapView/Window.jsx'
 import styled from 'styled-components'
